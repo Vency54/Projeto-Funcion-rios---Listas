@@ -4,6 +4,7 @@
 #include <conio.h>
 #include <cstdlib>
 #include <clocale>
+#include <iomanip>
 using namespace std;
 
 struct Funcionario
@@ -58,7 +59,7 @@ Funcionario* remove(Funcionario* funcionario, int prontuario)
 	}
 	if (aux == NULL)
 	{
-		cout << "Usuário não encontrado! " << endl;
+		cout << "UsuÃ¡rio nÃ£o encontrado! " << endl;
 		return funcionario;
 	}
 	if (ant == NULL) 
@@ -71,7 +72,7 @@ Funcionario* remove(Funcionario* funcionario, int prontuario)
 	}
 	delete aux;
 
-	cout << "Usuário removido! " << endl;
+	cout << "UsuÃ¡rio removido! " << endl;
 
 	return funcionario;
 }
@@ -79,20 +80,21 @@ Funcionario* remove(Funcionario* funcionario, int prontuario)
 
 void print(Funcionario* funcionario)
 {
-	int soma = 0;
+	double soma = 0;
 	Funcionario* aux;
 	aux = funcionario;
 	cout << "-----------" << endl;
 	while(aux != NULL)
 	{
 		soma += aux->salario;
-		cout << "Prontuário: " << aux->prontuario << endl;
+		cout << "ProntuÃ¡rio: " << aux->prontuario << endl;
 		cout << "Nome: " << aux->nome << endl;
-		cout << "Sálario: " << aux->salario << endl;
+		cout << "SalÃ¡rio: " << fixed << setprecision(2) << aux->salario << endl;
 		cout << "-----------" << endl;
 		aux = aux->prox;
 	}
-	cout << "Total de sálario: R$" << soma << endl;
+	cout << fixed << setprecision(2);
+	cout << "Total de sÃ¡lario: R$" << soma << endl;
 	cout << endl;
 }
 
@@ -118,7 +120,7 @@ int main()
 				 << "Digite: " << endl << "0. Sair" << endl
 				 << "1. Incluir" << endl << "2. Excluir" << endl
 				 << "3. Pesquisar" << endl << "4. Listar" << endl
-				 << "Digite a opção: ";
+				 << "Digite a opÃ§Ã£o: ";
 
 
 			getline(cin, entrada_escolha);
@@ -127,7 +129,7 @@ int main()
 
 			if(entrada_escolha.empty())
 			{
-				cout << "Digite uma opção!" << endl;
+				cout << "Digite uma opÃ§Ã£o!" << endl;
 				cout << endl;
 				continue;
 			}
@@ -146,7 +148,7 @@ int main()
 
 			if(!valido)
 			{
-				cout << "Digite apenas números!" << endl;
+				cout << "Digite apenas nÃºmeros!" << endl;
 				cout << endl;
 				continue;
 			}
@@ -155,7 +157,7 @@ int main()
 
 			if(escolha < 0 || escolha > 4)
 			{
-				cout << "Opção inválida!" << endl;
+				cout << "OpÃ§Ã£o invÃ¡lida!" << endl;
 				cout << endl;
 				continue;
 			}
@@ -172,17 +174,17 @@ int main()
 
 		else if(escolha == 1)
 		{
-			cout << "----- Inclusão -----" << endl;
+			cout << "----- InclusÃ£o -----" << endl;
 			while(true)
 			{
 				string entrada;
-				cout << "Digite o prontuário: ";
+				cout << "Digite o prontuÃ¡rio: ";
 				getline(cin, entrada);
 				cout << endl;
 
 				if(entrada.empty())
 				{
-					cout << "Prontuário não pode ser vazio!" << endl;
+					cout << "ProntuÃ¡rio nÃ£o pode ser vazio!" << endl;
 					cout << endl;
 					continue;
 				}
@@ -201,7 +203,7 @@ int main()
 
 				if(!valido)
 				{
-					cout << "Digite apenas números!" << endl;
+					cout << "Digite apenas nÃºmeros!" << endl;
 					cout << endl;
 					continue;
 				}
@@ -212,7 +214,7 @@ int main()
 
 				if(procurado != NULL)
 				{
-					cout << "Prontuário já existente!" << endl;
+					cout << "ProntuÃ¡rio jÃ¡ existente!" << endl;
 					cout << endl;
 					continue;
 
@@ -231,7 +233,7 @@ int main()
 
 				if(nome.empty())
 				{
-					cout << "Nome não pode ser vazio!" << endl;
+					cout << "Nome nÃ£o pode ser vazio!" << endl;
 					cout << endl;
 					continue;
 				}
@@ -249,7 +251,7 @@ int main()
 
 				if(!valido)
 				{
-					cout << "Nome não pode conter numeros!" << endl;
+					cout << "Nome nÃ£o pode conter nÃºmeros!" << endl;
 					cout << endl;
 					continue;
 				}
@@ -265,7 +267,7 @@ int main()
 				cout << endl;
 				if(entrada.empty())
 				{
-					cout << "Salario não pode ser vazio!" << endl << endl;
+					cout << "SalÃ¡rio nÃ£o pode ser vazio!" << endl << endl;
 					continue;
 				}
 
@@ -274,8 +276,9 @@ int main()
 
 				for(int i = 0; i < entrada.length(); i++)
 				{
-					if(entrada[i] == '.' && !ponto)
+					if((entrada[i] == '.' || entrada[i] == ',') && !ponto)
 					{
+						entrada[i] = ','; 
 						ponto = true;
 						continue;
 					}
@@ -289,7 +292,7 @@ int main()
 
 				if(!valido)
 				{
-					cout << "Digite um sálario válido!" << endl << endl;
+					cout << "Digite um sÃ¡lario vÃ¡lido!" << endl << endl;
 					continue;
 				}
 
@@ -298,25 +301,25 @@ int main()
 
 			}
 
-			cout << "Usuário incluido no banco de dados!" << endl;
+			cout << "UsuÃ¡rio incluido no banco de dados!" << endl;
 			minhaLista = insert(minhaLista, prontuario, nome, salario);
 
 		}
 
 		else if(escolha == 2)
 		{
-			cout << "----- Exclusão -----" << endl;
+			cout << "----- ExclusÃ£o -----" << endl;
 			while(true)
 			{
 				int procurar;
 				string entrada;
-				cout << "Digite o prontuário do funcionário: ";
+				cout << "Digite o prontuÃ¡rio do funcionÃ¡rio: ";
 				getline(cin, entrada);
 				cout << endl;
 
 				if(entrada.empty())
 				{
-					cout << "Prontuário não pode ser vazio!" << endl;
+					cout << "ProntuÃ¡rio nÃ£o pode ser vazio!" << endl;
 					cout << endl;
 					continue;
 				}
@@ -335,7 +338,7 @@ int main()
 
 				if(!valido)
 				{
-					cout << "Digite apenas números!" << endl;
+					cout << "Digite apenas nÃºmeros!" << endl;
 					cout << endl;
 					continue;
 				}
@@ -344,7 +347,7 @@ int main()
 				Funcionario* procurado = find(minhaLista, procurar);
 				if (procurado == NULL)
 				{
-					cout << "Prontuário não encontrado" << endl;
+					cout << "ProntuÃ¡rio nÃ£o encontrado" << endl;
 					break;
 				}
 				else
@@ -363,13 +366,13 @@ int main()
 			{
 				int procurar;
 				string entrada;
-				cout << "Digite o prontuário do funcionario: ";
+				cout << "Digite o prontuÃ¡rio do funcionÃ¡rio: ";
 				getline(cin, entrada);
 				cout << endl;
 
 				if(entrada.empty())
 				{
-					cout << "Prontuário não pode ser vazio!" << endl;
+					cout << "ProntuÃ¡rio nÃ£o pode ser vazio!" << endl;
 					cout << endl;
 					continue;
 				}
@@ -388,7 +391,7 @@ int main()
 
 				if(!valido)
 				{
-					cout << "Digite apenas números!" << endl;
+					cout << "Digite apenas nÃºmeros!" << endl;
 					cout << endl;
 					continue;
 				}
@@ -398,15 +401,15 @@ int main()
 
 				if (procurado == NULL)
 				{
-					cout << "Prontuário não encontrado" << endl;
+					cout << "ProntuÃ¡rio nÃ£o encontrado" << endl;
 					break;
 				}
 				else
 				{
-					cout << "Prontuário pesquisado: "
+					cout << "ProntuÃ¡rio pesquisado: "
 						 << procurado->prontuario << endl
 						 << "Nome: " << procurado->nome << endl
-						 << "Sálario: R$ " << procurado->salario << endl;
+						 << "SalÃ¡rio: R$ " << fixed << setprecision(2) << procurado->salario << endl;
 					cout << endl;
 					break;
 				}
@@ -415,7 +418,7 @@ int main()
 
 		else if(escolha == 4 )
 		{
-			cout << "----- Lista de Funcionários ----- " << endl;
+			cout << "----- Lista de FuncionÃ¡rios ----- " << endl;
 			if(isEmpty(minhaLista) == true)
 			{
 				cout << "Lista Vazia!" << endl;
